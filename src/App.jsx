@@ -1,4 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
+import Filter from "./components/Filter";
+import Form from "./components/Form";
+import Numbers from "./components/Numbers";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -7,6 +11,14 @@ const App = () => {
 
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [search, setNewSearch] = useState("");
+  const [showAllNames, setShowAllNames] = useState(true);
+
+  const namesToShow = showAllNames
+    ? persons
+    : persons.filter((person) =>
+        person.name.toLowerCase().includes(search.toLowerCase())
+      );
 
   const handleInputChange = (event) => {
     setNewName(event.target.value);
@@ -14,6 +26,11 @@ const App = () => {
 
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value);
+  };
+
+  const handleSearch = (event) => {
+    setNewSearch(event.target.value);
+    setShowAllNames(false);
   };
 
   const handlePersonSubmit = (event) => {
@@ -38,24 +55,16 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={handlePersonSubmit}>
-        <div>
-          name: <input value={newName} onChange={handleInputChange} />
-          <br />
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Filter search={search} handleSearch={handleSearch} />
+      <Form
+        newName={newName}
+        newNumber={newNumber}
+        handleInputChange={handleInputChange}
+        handleNumberChange={handleNumberChange}
+        handlePersonSubmit={handlePersonSubmit}
+      />
       <h2>Numbers</h2>
-      <ul>
-        {persons.map((person) => (
-          <li key={person.id}>
-            {person.name} - {person.number}
-          </li>
-        ))}
-      </ul>
+      <Numbers namesToShow={namesToShow} />
     </div>
   );
 };
