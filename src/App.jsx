@@ -1,18 +1,22 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Form from "./components/Form";
 import Numbers from "./components/Numbers";
+import axios from "axios";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { id: 1, name: "Dave Ruocco", number: "98001-999-009" },
-  ]);
-
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setNewSearch] = useState("");
   const [showAllNames, setShowAllNames] = useState(true);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((res) => {
+      setPersons(res.data);
+    });
+  });
 
   const namesToShow = showAllNames
     ? persons
@@ -49,6 +53,7 @@ const App = () => {
       };
       setPersons(persons.concat(newPersonObj));
       setNewName("");
+      setNewNumber("");
     }
   };
 
