@@ -17,12 +17,14 @@ const App = () => {
     methods.getAll().then((res) => {
       setPersons(res.data);
     });
-  });
+  }, []);
 
   const namesToShow = showAllNames
     ? persons
-    : persons.filter((person) =>
-        person.name.toLowerCase().includes(search.toLowerCase())
+    : persons.filter(
+        (person) =>
+          person.name &&
+          person.name.toLowerCase().includes(search.toLowerCase())
       );
 
   const handleInputChange = (event) => {
@@ -34,8 +36,9 @@ const App = () => {
   };
 
   const handleSearch = (event) => {
-    setNewSearch(event.target.value);
-    setShowAllNames(false);
+    const newSearchValue = event.target.value;
+    setNewSearch(newSearchValue);
+    setShowAllNames(newSearchValue === "");
   };
 
   const handlePersonSubmit = (event) => {
@@ -60,6 +63,12 @@ const App = () => {
     }
   };
 
+  const handlePersonDelete = (id) => {
+    methods.deletePost(id).then((res) => {
+      setPersons(persons.filter((person) => person.id !== id));
+    });
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -72,7 +81,10 @@ const App = () => {
         handlePersonSubmit={handlePersonSubmit}
       />
       <h2>Numbers</h2>
-      <Numbers namesToShow={namesToShow} />
+      <Numbers
+        namesToShow={namesToShow}
+        handlePersonDelete={handlePersonDelete}
+      />
     </div>
   );
 };
