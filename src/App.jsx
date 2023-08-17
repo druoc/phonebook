@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Form from "./components/Form";
 import Numbers from "./components/Numbers";
+import PersonAddedAlert from "./components/PersonAddedAlert";
 import axios from "axios";
 import methods from "../utilities/methods";
 
@@ -12,6 +13,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [search, setNewSearch] = useState("");
   const [showAllNames, setShowAllNames] = useState(true);
+  const [addedAlert, setAddedAlert] = useState("");
 
   useEffect(() => {
     methods.getAll().then((res) => {
@@ -51,12 +53,15 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
     } else {
       const newPersonObj = {
-        id: persons.length + 1,
         name: newName,
         number: newNumber,
       };
       methods.newPost(newPersonObj).then((res) => {
         setPersons(persons.concat(res.data));
+        setAddedAlert(`${newName} added to phonebook`);
+        setTimeout(() => {
+          setAddedAlert("");
+        }, 3000);
         setNewName("");
         setNewNumber("");
       });
@@ -73,6 +78,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Filter search={search} handleSearch={handleSearch} />
+      <PersonAddedAlert addedAlert={addedAlert} />
       <Form
         newName={newName}
         newNumber={newNumber}

@@ -1,0 +1,9 @@
+.person-added-alert {
+  width: 100%;
+  background-color: green;
+  color: #fff;
+  height: 5vh;
+  border: grey;
+  border-radius: 10px;
+  margin-top: 10px;
+}
