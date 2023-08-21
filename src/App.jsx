@@ -5,6 +5,7 @@ import Form from "./components/Form";
 import Numbers from "./components/Numbers";
 import PersonAddedAlert from "./components/PersonAddedAlert";
 import AlreadyAddedAlert from "./components/AlreadyAddedAlert";
+import PersonDeletedAlert from "./components/PersonDeletedAlert";
 import methods from "../utilities/methods";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
   const [search, setNewSearch] = useState("");
   const [showAllNames, setShowAllNames] = useState(true);
   const [addedAlert, setAddedAlert] = useState("");
+  const [deletedAlert, setDeletedAlert] = useState("");
   const [personAlreadyDeleted, setPersonAlreadyDeleted] = useState("");
 
   console.log(personAlreadyDeleted);
@@ -77,6 +79,12 @@ const App = () => {
       .deletePost(id)
       .then(() => {
         setPersons(persons.filter((person) => person.id !== id));
+        setDeletedAlert(
+          `${personToDelete.name} has been removed from the phonebook`
+        );
+        setTimeout(() => {
+          setDeletedAlert("");
+        }, 3000);
       })
       .catch(() => {
         setPersonAlreadyDeleted(
@@ -93,6 +101,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter search={search} handleSearch={handleSearch} />
       <PersonAddedAlert addedAlert={addedAlert} />
+      <PersonDeletedAlert deletedAlert={deletedAlert} />
       <AlreadyAddedAlert personAlreadyDeleted={personAlreadyDeleted} />
       <Form
         newName={newName}

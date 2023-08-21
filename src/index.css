@@ -8,7 +8,8 @@
   margin-top: 10px;
 }
 
-.person-already-deleted-alert {
+.person-already-deleted-alert,
+.person-deleted-alert {
   width: 100%;
   background-color: red;
   color: #fff;
