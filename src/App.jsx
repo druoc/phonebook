@@ -9,6 +9,7 @@ import PersonDeletedAlert from "./components/PersonDeletedAlert";
 import methods from "../utilities/methods";
 
 const App = () => {
+  //state variables
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -17,8 +18,6 @@ const App = () => {
   const [addedAlert, setAddedAlert] = useState("");
   const [deletedAlert, setDeletedAlert] = useState("");
   const [personAlreadyDeleted, setPersonAlreadyDeleted] = useState("");
-
-  console.log(personAlreadyDeleted);
 
   useEffect(() => {
     methods.getAll().then((res) => {
@@ -34,6 +33,7 @@ const App = () => {
           person.name.toLowerCase().includes(search.toLowerCase())
       );
 
+  //event handlers
   const handleInputChange = (event) => {
     setNewName(event.target.value);
   };
