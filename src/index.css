@@ -1,20 +1,22 @@
 .person-added-alert {
+  display: flex;
   width: 100%;
   background-color: green;
   color: #fff;
   height: 5vh;
-  border: grey;
   border-radius: 10px;
   margin-top: 10px;
+  padding-left: 10px;
 }
 
 .person-already-deleted-alert,
 .person-deleted-alert {
+  display: flex;
   width: 100%;
   background-color: red;
   color: #fff;
   height: 5vh;
-  border: grey;
   border-radius: 10px;
   margin-top: 10px;
+  padding-left: 10px;
 }
